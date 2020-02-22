@@ -4,6 +4,7 @@
 #include "winapi_help.h"
 #include "liwepaper.h"
 #include "liwepaper_gui.h"
+#include "resource.h"
 
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
@@ -20,11 +21,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR pCmdLine, 
 	wc.cbClsExtra = 0;
 	wc.cbWndExtra = 0;
 	wc.hInstance = hInstance;
-	wc.hIcon = loadImage("icon.ico");
+	wc.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON));
 	wc.lpszClassName = CLASS_NAME;
 	wc.hbrBackground = CreateSolidBrush(0x00202020);
 	wc.lpszMenuName = NULL;
-	wc.hIconSm = loadImage("icon.ico");
+	wc.hIconSm = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON));
 	RegisterClassEx(&wc);
 
 	// Create the window.

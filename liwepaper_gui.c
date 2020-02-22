@@ -1,8 +1,10 @@
 #include <windows.h>
 #include <shellapi.h>
 #include <shlwapi.h>
+#include <strsafe.h>
 #include "liwepaper.h"
 #include "liwepaper_gui.h"
+#include "resources.h"
 
 //CreateWindowEx
 HWND CrWin(LPCSTR CLASS_NAME, LPCSTR winText, HINSTANCE hInstance)
@@ -12,7 +14,7 @@ HWND CrWin(LPCSTR CLASS_NAME, LPCSTR winText, HINSTANCE hInstance)
 		CLASS_NAME,
 		winText,
 		WS_OVERLAPPEDWINDOW,
-		CW_USEDEFAULT, CW_USEDEFAULT, 640, 420,
+		CW_USEDEFAULT, CW_USEDEFAULT, 640, 440,
 		NULL,
 		NULL,
 		hInstance,
@@ -57,6 +59,20 @@ HWND CrStatic(HWND hwnd, LPCSTR text, UINT px, UINT py, UINT sx, UINT sy)
 	return tstatic;
 }
 
+HWND CrBitmap(HWND hwnd, LPCSTR path, UINT px, UINT py, UINT sx, UINT sy)
+{
+	HWND bitmap = CreateWindow(
+		"Static", NULL,
+		WS_CHILD | WS_VISIBLE | SS_BITMAP,
+		px, py, sx, sy,
+		hwnd, (HMENU)NULL, NULL, NULL);
+
+	HBITMAP hBitmap = LoadBitmap(GetModuleHandle(NULL), MAKEINTRESOURCE(IDB_LOGO));
+	SendMessage(bitmap, STM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)hBitmap);
+
+	return bitmap;
+}
+
 HWND CrLine(HWND hwnd, UINT px, UINT py, UINT sx, UINT sy)
 {
 	HWND tstatic = CreateWindow(
@@ -93,7 +109,7 @@ NOTIFYICONDATA CrNotifyIcon(HWND hwnd, LPCSTR text)
 	nid.uID = APPWM_TRAY_ICON;
 	nid.uFlags = NIF_ICON | NIF_TIP | NIF_MESSAGE;
 	nid.uCallbackMessage = APPWM_ICONNOTIFY;
-	nid.hIcon = loadImage("icon.ico");
+	nid.hIcon = LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(IDI_ICON));
 
 	return nid;
 }
@@ -118,20 +134,22 @@ void changeStaticColor(HDC hdcStatic)
 
 void drawControls(HWND hwnd)
 {
-	HWND line1 = CrLine(hwnd, 70, 50, 480, 20);
+	HWND logo = CrBitmap(hwnd, NULL, 100, 15, 420, 130);
 
-	HWND static1 = CrStatic(hwnd, "Path to video player:", 70, 70, 480, 20);
-	HWND edit1 = CrEdit(hwnd, playerPath, 70, 90, 480, 20, APPWM_EDIT1);
+	HWND line1 = CrLine(hwnd, 60, 150, 500, 20);
 
-	HWND static2 = CrStatic(hwnd, "Parameters for video player:", 70, 130, 480, 20);
-	HWND edit2 = CrEdit(hwnd, playerParams, 70, 150, 480, 20, APPWM_EDIT2);
+	HWND static1 = CrStatic(hwnd, "Path to video player:", 60, 170, 500, 20);
+	HWND edit1 = CrEdit(hwnd, playerPath, 60, 190, 500, 20, APPWM_EDIT1);
 
-	HWND button1 = CrButton(hwnd, "Start", 70, 210, 220, 40, APPWM_BUTTON1);
-	HWND button2 = CrButton(hwnd, "Stop", 335, 210, 220, 40, APPWM_BUTTON2);
+	HWND static2 = CrStatic(hwnd, "Parameters for video player:", 60, 230, 500, 20);
+	HWND edit2 = CrEdit(hwnd, playerParams, 60, 250, 500, 20, APPWM_EDIT2);
 
-	HWND check1 = CrCheck(hwnd, "Launch at startup", 70, 270, 220, 20, APPWM_CHECK1, 1);
+	HWND button1 = CrButton(hwnd, "Start", 60, 310, 200, 40, APPWM_BUTTON1);
+	HWND button2 = CrButton(hwnd, "Stop", 360, 310, 200, 40, APPWM_BUTTON2);
 
-	HWND line2 = CrLine(hwnd, 70, 310, 480, 20);
+	HWND check1 = CrCheck(hwnd, "Launch at startup", 60, 370, 220, 20, APPWM_CHECK1, 1);
+
+	HWND line2 = CrLine(hwnd, 60, 410, 500, 20);
 
 	EnableWindow(edit1, 0);
 	EnableWindow(edit2, 0);

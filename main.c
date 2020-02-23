@@ -4,7 +4,7 @@
 #include "winapi_help.h"
 #include "liwepaper.h"
 #include "liwepaper_gui.h"
-#include "resource.h"
+#include "resources.h"
 
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
@@ -114,6 +114,20 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		case APPWM_TRAY_STOP:
 			stop();
 			break;
+
+		case APPWM_TRAY_EXIT:
+			stop();
+			PostQuitMessage(0);
+			return 0;
+		}
+		break;
+
+	case WM_SYSCOMMAND:
+		switch (LOWORD(wParam)) {
+			case SC_MINIMIZE:
+
+				ShowWindow(hwnd, SW_HIDE);
+				break;
 		}
 		break;
 

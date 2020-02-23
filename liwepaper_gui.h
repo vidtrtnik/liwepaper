@@ -7,6 +7,7 @@
 #define APPWM_TRAY_OPEN (WM_APP + 11)
 #define APPWM_TRAY_START (WM_APP + 12)
 #define APPWM_TRAY_STOP (WM_APP + 13)
+#define APPWM_TRAY_EXIT (WM_APP + 14)
 
 #define APPWM_TIMER (WM_APP + 20)
 

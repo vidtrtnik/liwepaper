@@ -13,7 +13,7 @@ HWND CrWin(LPCSTR CLASS_NAME, LPCSTR winText, HINSTANCE hInstance)
 		0,
 		CLASS_NAME,
 		winText,
-		WS_OVERLAPPEDWINDOW,
+		WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX,
 		CW_USEDEFAULT, CW_USEDEFAULT, 640, 440,
 		NULL,
 		NULL,
@@ -122,6 +122,8 @@ HMENU CrPopupMenu()
 	AppendMenu(popupMenu, MF_SEPARATOR, 0, NULL);
 	AppendMenu(popupMenu, MF_STRING, APPWM_TRAY_START, "Start");
 	AppendMenu(popupMenu, MF_STRING, APPWM_TRAY_STOP, "Stop");
+	AppendMenu(popupMenu, MF_SEPARATOR, 0, NULL);
+	AppendMenu(popupMenu, MF_STRING, APPWM_TRAY_EXIT, "Exit");
 
 	return popupMenu;
 }

@@ -13,7 +13,7 @@ HWND CrWin(LPCSTR CLASS_NAME, LPCSTR winText, HINSTANCE hInstance)
 		0,
 		CLASS_NAME,
 		winText,
-		WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX,
+		WS_OVERLAPPEDWINDOW & ~WS_MAXIMIZEBOX,
 		CW_USEDEFAULT, CW_USEDEFAULT, 640, 440,
 		NULL,
 		NULL,
@@ -149,7 +149,7 @@ void drawControls(HWND hwnd)
 	HWND button1 = CrButton(hwnd, "Start", 60, 310, 200, 40, APPWM_BUTTON1);
 	HWND button2 = CrButton(hwnd, "Stop", 360, 310, 200, 40, APPWM_BUTTON2);
 
-	HWND check1 = CrCheck(hwnd, "Launch at startup", 60, 370, 220, 20, APPWM_CHECK1, 1);
+	HWND check1 = CrCheck(hwnd, "Launch at startup", 60, 370, 220, 20, APPWM_CHECK1, 0);
 
 	HWND line2 = CrLine(hwnd, 60, 410, 500, 20);
 
@@ -164,28 +164,33 @@ void handlePaint(HWND hwnd)
 	EndPaint(hwnd, &ps);
 }
 
-void handleCheckBox(HWND hwnd)
+int handleCheckBox(HWND hwnd)
 {
 	BOOL checked = IsDlgButtonChecked(hwnd, APPWM_CHECK1);
 
 	if (checked)
+	{
 		CheckDlgButton(hwnd, APPWM_CHECK1, BST_UNCHECKED);
+		return 0;
+	}
 
 	else
 		CheckDlgButton(hwnd, APPWM_CHECK1, BST_CHECKED);
+
+	return 1;
 }
 
-void OpenContextMenu(HWND hWnd, HMENU cMenu)
+void OpenContextMenu(HWND hwnd, HMENU cMenu)
 {
 	POINT curPoint;
 	GetCursorPos(&curPoint);
 
-	SetForegroundWindow(hWnd);
+	SetForegroundWindow(hwnd);
 
 	UINT clicked = TrackPopupMenu(
 		cMenu, 0,
 		curPoint.x, curPoint.y,
-		0, hWnd, NULL);
+		0, hwnd, NULL);
 }
 
 void handleTrayIconDblCl(HWND hwnd)

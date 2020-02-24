@@ -4,9 +4,10 @@
 void start();
 void stop();
 void checkState();
-DWORD run(LPCSTR, LPCSTR, int);
+HANDLE run(LPCSTR, LPCSTR, int);
+void setStartup();
 
-DWORD PID;
+HANDLE pHandle;
 LPCSTR playerPath;
 LPCSTR playerParams;
 

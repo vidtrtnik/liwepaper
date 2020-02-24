@@ -3,7 +3,7 @@
 #include "liwepaper.h"
 #include "winapi_help.h"
 
-DWORD PID = NULL;
+HANDLE procHandle = NULL;
 LPCSTR playerPath = "mpv.exe";
 LPCSTR playerParams = "--vo=gpu --gpu-context=d3d11 --hwdec=d3d11va --terminal=no --loop=inf --audio=no --fs \"video.mp4\"";
 
@@ -18,12 +18,9 @@ void start()
 	if (VP_INTERRUPTED)
 		return;
 
-	PID = run(playerPath, playerParams, 333);
-	EnumWindows(EnumWindowsProcMy, PID);
+	procHandle = run(playerPath, playerParams, 333);
 
-	HWND w = NULL;
-	if (ghwnd != NULL)
-		w = ghwnd;
+	HWND w = getHwndFromHandle(procHandle);
 
 	wp_add(w);
 	wp_fullscreen(w);
@@ -35,7 +32,6 @@ void stop()
 {
 	if (VP_RUNNING)
 	{
-		HANDLE procHandle = OpenProcess(PROCESS_TERMINATE, 0, PID);
 		TerminateProcess(procHandle, 1);
 		CloseHandle(procHandle);
 
@@ -66,10 +62,29 @@ void checkState()
 }
 
 
-DWORD run(LPCSTR file, LPCSTR parameters, int wait)
+HANDLE run(LPCSTR file, LPCSTR parameters, int wait)
 {
-	DWORD PID = shellExec(file, parameters);
+	HANDLE pHandle = shellExec(file, parameters);
 	Sleep(wait);
 
-	return PID;
+	return pHandle;
+}
+
+void setStartup()
+{
+	TCHAR szPath[MAX_PATH];
+	GetModuleFileName(NULL, szPath, MAX_PATH);
+
+	TCHAR szDir[MAX_PATH];
+	GetCurrentDirectory(MAX_PATH, szDir);
+
+	createShortcut(szPath, szDir, szPath, "Liwepaper");
+}
+
+void unsetStartup()
+{
+	TCHAR szDir[MAX_PATH];
+	GetCurrentDirectory(MAX_PATH, szDir);
+
+	deleteShortcut("Liwepaper.lnk", szDir);
 }

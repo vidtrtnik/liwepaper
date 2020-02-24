@@ -77,14 +77,15 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 		switch (lParam)
 		{
-			case WM_LBUTTONDBLCLK:
-				handleTrayIconDblCl(hwnd);
+		case WM_LBUTTONDBLCLK:
+			showWindow(hwnd);
+			handleTrayIconDblCl(hwnd);
 			break;
 
-			case WM_RBUTTONDOWN:
-				case WM_CONTEXTMENU:
-					OpenContextMenu(hwnd, hMenu);
-					break;
+		case WM_RBUTTONDOWN:
+		case WM_CONTEXTMENU:
+			OpenContextMenu(hwnd, hMenu);
+			break;
 		}
 		break;
 
@@ -101,7 +102,10 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			break;
 
 		case APPWM_CHECK1:
-			handleCheckBox(hwnd);
+			if (handleCheckBox(hwnd))
+				setStartup();
+			else
+				unsetStartup();
 			break;
 		case APPWM_TRAY_OPEN:
 			handleTrayIconDblCl(hwnd);
@@ -124,10 +128,9 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 	case WM_SYSCOMMAND:
 		switch (LOWORD(wParam)) {
-			case SC_MINIMIZE:
-
-				ShowWindow(hwnd, SW_HIDE);
-				break;
+		case SC_MINIMIZE:
+			hideWindow(hwnd);
+			break;
 		}
 		break;
 
@@ -139,10 +142,10 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	break;
 
 	case WM_TIMER:
-		switch (wParam) 
+		switch (wParam)
 		{
-			case APPWM_TIMER:
-				checkState();
+		case APPWM_TIMER:
+			checkState();
 			return 0;
 		}
 	}

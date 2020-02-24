@@ -30,7 +30,7 @@ HMENU CrPopupMenu();
 void changeStaticColor(HDC);
 void drawControls(HWND);
 void handlePaint(HWND);
-void handleCheckBox(HWND);
+int handleCheckBox(HWND);
 void OpenContextMenu(HWND, HMENU);
 void handleTrayIconDblCl(HWND);
 

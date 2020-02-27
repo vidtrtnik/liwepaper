@@ -105,7 +105,7 @@ HICON loadImage(LPCSTR path)
 	return icon;
 }
 
-int createShortcut(LPCSTR path, LPCSTR workingDir, LPCSTR iconLocation, LPCSTR description)
+int createShortcut(LPCSTR path, LPCSTR arguments, LPCSTR workingDir, LPCSTR iconLocation, LPCSTR description)
 {
 	//CoInitialize(NULL);
 	IShellLink* pShellLink = NULL;
@@ -114,10 +114,10 @@ int createShortcut(LPCSTR path, LPCSTR workingDir, LPCSTR iconLocation, LPCSTR d
 	if (SUCCEEDED(hres))
 	{
 		pShellLink->lpVtbl->SetPath(pShellLink, path);
+		pShellLink->lpVtbl->SetArguments(pShellLink, arguments);
 		pShellLink->lpVtbl->SetWorkingDirectory(pShellLink, workingDir);
 		pShellLink->lpVtbl->SetDescription(pShellLink, description);
 		pShellLink->lpVtbl->SetIconLocation(pShellLink, iconLocation, 0);
-
 
 		IPersistFile* pPersistFile = NULL;
 
@@ -189,6 +189,7 @@ void setWindowStyle(HWND hwnd, long flags)
 
 void hideWindow(HWND hwnd)
 {
+	ShowWindow(hwnd, SW_MINIMIZE);
 	ShowWindow(hwnd, SW_HIDE);
 	long windowStyle = GetWindowLong(hwnd, GWL_EXSTYLE);
 	windowStyle |= WS_EX_TOOLWINDOW;
@@ -196,6 +197,7 @@ void hideWindow(HWND hwnd)
 
 	SetWindowLong(hwnd, GWL_EXSTYLE, windowStyle);
 	ShowWindow(hwnd, SW_SHOW);
+	ShowWindow(hwnd, SW_MINIMIZE);
 	ShowWindow(hwnd, SW_HIDE);
 }
 

@@ -97,7 +97,6 @@ HWND CrCheck(HWND hwnd, LPCSTR text, UINT px, UINT py, UINT sx, UINT sy, UINT_PT
 	else
 		CheckDlgButton(hwnd, ID, BST_UNCHECKED);
 
-	//CheckDlgButton(hwnd, ID, BST_INDETERMINATE);
 	return checkb;
 }
 
@@ -134,7 +133,7 @@ void changeStaticColor(HDC hdcStatic)
 	SetTextColor(hdcStatic, RGB(255, 255, 255));
 }
 
-void drawControls(HWND hwnd)
+void drawControls(HWND hwnd, int onStartup)
 {
 	HWND logo = CrBitmap(hwnd, NULL, 100, 15, 420, 130);
 
@@ -149,7 +148,7 @@ void drawControls(HWND hwnd)
 	HWND button1 = CrButton(hwnd, "Start", 60, 310, 200, 40, APPWM_BUTTON1);
 	HWND button2 = CrButton(hwnd, "Stop", 360, 310, 200, 40, APPWM_BUTTON2);
 
-	HWND check1 = CrCheck(hwnd, "Launch at startup", 60, 370, 220, 20, APPWM_CHECK1, 0);
+	HWND check1 = CrCheck(hwnd, "Launch at startup", 60, 370, 220, 20, APPWM_CHECK1, onStartup);
 
 	HWND line2 = CrLine(hwnd, 60, 410, 500, 20);
 

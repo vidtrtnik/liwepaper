@@ -1,4 +1,5 @@
 #define WP_IMPLEMENTATION
+
 #include "weebp/weebp.c"
 #include "liwepaper.h"
 #include "winapi_help.h"
@@ -78,7 +79,7 @@ void setStartup()
 	TCHAR szDir[MAX_PATH];
 	GetCurrentDirectory(MAX_PATH, szDir);
 
-	createShortcut(szPath, szDir, szPath, "Liwepaper");
+	createShortcut(szPath, "1", szDir, szPath, "Liwepaper");
 }
 
 void unsetStartup()

@@ -6,7 +6,7 @@ int getNotificationState();
 BOOL CALLBACK EnumWindowsHwndCallback(HWND, LPARAM);
 HANDLE shellExec(LPCSTR, LPCSTR);
 HICON loadImage(LPCSTR);
-int createShortcut(LPCSTR, LPCSTR, LPCSTR, LPCSTR);
+int createShortcut(LPCSTR, LPCSTR, LPCSTR, LPCSTR, LPCSTR);
 int deleteShortcut(LPCSTR, LPCSTR);
 DWORD getPID(HANDLE);
 HWND getHwndFromHandle(HANDLE);

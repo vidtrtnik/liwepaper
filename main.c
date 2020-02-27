@@ -10,8 +10,12 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 HMENU hMenu = NULL;
 
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR pCmdLine, int nCmdShow)
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine, int nCmdShow)
 {
+	int onStartup = 0;
+	if (strlen(lpCmdLine) > 0)
+		onStartup = 1;
+
 	// Register the window class.
 	LPCSTR CLASS_NAME = "LIWEPAPER_WINDOW_CLASS";
 	WNDCLASSEX wc = { 0 };
@@ -29,11 +33,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR pCmdLine, 
 	RegisterClassEx(&wc);
 
 	// Create the window.
-	HWND hwnd = CrWin(CLASS_NAME, "Liwepaper v0.1", hInstance);
+	HWND hwnd = CrWin(CLASS_NAME, "Liwepaper 1.0", hInstance);
 	if (hwnd == NULL)
 		return 0;
 
-	ShowWindow(hwnd, nCmdShow);
+	ShowWindow(hwnd, SW_SHOWNORMAL - onStartup);
+
 	// Create the notification icon
 	NOTIFYICONDATA nid = CrNotifyIcon(hwnd, "liwepaper_notifyicon");
 
@@ -47,7 +52,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR pCmdLine, 
 	UINT_PTR timer = setTimer(hwnd, APPWM_TIMER, 2000);
 
 	// Draw window controls
-	drawControls(hwnd);
+	drawControls(hwnd, onStartup);
+
+	if (onStartup)
+		start();
 
 	// Run the message loop.
 	MSG msg = { 0 };
@@ -108,6 +116,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				unsetStartup();
 			break;
 		case APPWM_TRAY_OPEN:
+			showWindow(hwnd);
 			handleTrayIconDblCl(hwnd);
 			break;
 

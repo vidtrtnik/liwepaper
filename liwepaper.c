@@ -6,7 +6,7 @@
 
 HANDLE procHandle = NULL;
 LPCSTR playerPath = "mpv.exe";
-LPCSTR playerParams = "--vo=gpu --gpu-context=d3d11 --hwdec=d3d11va --terminal=no --loop=inf --audio=no --fs \"video.mp4\"";
+LPCSTR playerParams = "--vo=gpu --gpu-context=d3d11 --hwdec=d3d11va --terminal=no --no-input-default-bindings --loop=inf --audio=no --fs \"video.mp4\"";
 
 int VP_RUNNING = 0;
 int VP_INTERRUPTED = 0;

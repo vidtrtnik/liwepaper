@@ -9,6 +9,7 @@
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 HMENU hMenu = NULL;
+NOTIFYICONDATA nid = { 0 };
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine, int nCmdShow)
 {
@@ -40,7 +41,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine,
 	ShowWindow(hwnd, SW_SHOWNORMAL - onStartup);
 
 	// Create the notification icon
-	NOTIFYICONDATA nid = CrNotifyIcon(hwnd, "liwepaper_notifyicon");
+	nid = CrNotifyIcon(hwnd, "liwepaper_notifyicon");
 
 	// Show the notification icon
 	Shell_NotifyIcon(NIM_ADD, &nid);
@@ -49,7 +50,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine,
 	hMenu = CrPopupMenu();
 
 	// Create and start timer
-	UINT_PTR timer = setTimer(hwnd, APPWM_TIMER, 2000);
+	UINT_PTR timer = setTimer(hwnd, APPWM_TIMER, 1500);
 
 	// Draw window controls
 	drawControls(hwnd, onStartup);
@@ -74,6 +75,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
 	case WM_DESTROY:
 		stop();
+		Shell_NotifyIcon(NIM_DELETE, &nid);
 		PostQuitMessage(0);
 		return 0;
 
@@ -130,6 +132,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 		case APPWM_TRAY_EXIT:
 			stop();
+			Shell_NotifyIcon(NIM_DELETE, &nid);
 			PostQuitMessage(0);
 			return 0;
 		}

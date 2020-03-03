@@ -107,7 +107,7 @@ HICON loadImage(LPCSTR path)
 
 int createShortcut(LPCSTR path, LPCSTR arguments, LPCSTR workingDir, LPCSTR iconLocation, LPCSTR description)
 {
-	//CoInitialize(NULL);
+	CoInitialize(NULL);
 	IShellLink* pShellLink = NULL;
 
 	HRESULT hres = CoCreateInstance(&CLSID_ShellLink, NULL, CLSCTX_ALL, &IID_IShellLink, (PVOID*)&pShellLink);

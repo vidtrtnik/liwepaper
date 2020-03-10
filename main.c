@@ -1,3 +1,10 @@
+#ifndef UNICODE
+#define UNICODE
+#endif
+#ifndef _UNICODE
+#define _UNICODE
+#endif
+
 #include <windows.h>
 #include <stdio.h>
 
@@ -18,7 +25,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine,
 		onStartup = 1;
 
 	// Register the window class.
-	LPCSTR CLASS_NAME = "LIWEPAPER_WINDOW_CLASS";
+	LPCWSTR CLASS_NAME = L"LIWEPAPER_WINDOW_CLASS";
 	WNDCLASSEX wc = { 0 };
 	wc.cbSize = sizeof(WNDCLASSEX);
 	wc.style = 0;
@@ -34,14 +41,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine,
 	RegisterClassEx(&wc);
 
 	// Create the window.
-	HWND hwnd = CrWin(CLASS_NAME, "Liwepaper 1.0", hInstance);
+	HWND hwnd = CrWin(CLASS_NAME, L"Liwepaper 1.0", hInstance);
 	if (hwnd == NULL)
 		return 0;
 
 	ShowWindow(hwnd, SW_SHOWNORMAL - onStartup);
 
 	// Create the notification icon
-	nid = CrNotifyIcon(hwnd, "liwepaper_notifyicon");
+	nid = CrNotifyIcon(hwnd, L"liwepaper_notifyicon");
 
 	// Show the notification icon
 	Shell_NotifyIcon(NIM_ADD, &nid);

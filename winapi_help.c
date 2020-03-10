@@ -1,3 +1,10 @@
+#ifndef UNICODE
+#define UNICODE
+#endif
+#ifndef _UNICODE
+#define _UNICODE
+#endif
+
 #include <windows.h>
 #include <shellapi.h>
 #include <shlwapi.h>
@@ -82,7 +89,7 @@ BOOL CALLBACK EnumWindowsHwndCallback(HWND hwnd, LPARAM lParam)
 	return TRUE;
 }
 
-HANDLE shellExec(LPCSTR lpFile, LPCSTR lpParameters)
+HANDLE shellExec(LPCWSTR lpFile, LPCWSTR lpParameters)
 {
 	SHELLEXECUTEINFO ShExecInfo = { 0 };
 	ShExecInfo.cbSize = sizeof(SHELLEXECUTEINFO);
@@ -99,13 +106,13 @@ HANDLE shellExec(LPCSTR lpFile, LPCSTR lpParameters)
 	return ShExecInfo.hProcess;
 }
 
-HICON loadImage(LPCSTR path)
+HICON loadImage(LPCWSTR path)
 {
 	HICON icon = LoadImage(NULL, path, IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR | LR_SHARED | LR_DEFAULTSIZE | LR_LOADFROMFILE);
 	return icon;
 }
 
-int createShortcut(LPCSTR path, LPCSTR arguments, LPCSTR workingDir, LPCSTR iconLocation, LPCSTR description)
+int createShortcut(LPCWSTR path, LPCWSTR arguments, LPCWSTR workingDir, LPCWSTR iconLocation, LPCWSTR description)
 {
 	CoInitialize(NULL);
 	IShellLink* pShellLink = NULL;
@@ -145,7 +152,7 @@ int createShortcut(LPCSTR path, LPCSTR arguments, LPCSTR workingDir, LPCSTR icon
 	return 0;
 }
 
-int deleteShortcut(LPCSTR linkName, LPCSTR workingDir)
+int deleteShortcut(LPCWSTR linkName, LPCWSTR workingDir)
 {
 
 	TCHAR stPath[MAX_PATH];

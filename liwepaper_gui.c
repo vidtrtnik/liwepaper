@@ -1,3 +1,10 @@
+#ifndef UNICODE
+#define UNICODE
+#endif
+#ifndef _UNICODE
+#define _UNICODE
+#endif
+
 #include <windows.h>
 #include <shellapi.h>
 #include <shlwapi.h>
@@ -7,7 +14,7 @@
 #include "resources.h"
 
 //CreateWindowEx
-HWND CrWin(LPCSTR CLASS_NAME, LPCSTR winText, HINSTANCE hInstance)
+HWND CrWin(LPCWSTR CLASS_NAME, LPCWSTR winText, HINSTANCE hInstance)
 {
 	HWND hwnd = CreateWindowEx(
 		0,
@@ -24,10 +31,10 @@ HWND CrWin(LPCSTR CLASS_NAME, LPCSTR winText, HINSTANCE hInstance)
 	return hwnd;
 }
 
-HWND CrEdit(HWND hwnd, LPCSTR text, UINT px, UINT py, UINT sx, UINT sy, UINT_PTR ID)
+HWND CrEdit(HWND hwnd, LPCWSTR text, UINT px, UINT py, UINT sx, UINT sy, UINT_PTR ID)
 {
 	HWND edit = CreateWindow(
-		"Edit", NULL,
+		L"Edit", NULL,
 		WS_CHILD | WS_VISIBLE | WS_BORDER,
 		px, py, sx, sy,
 		hwnd, (HMENU)NULL, NULL, NULL);
@@ -37,10 +44,10 @@ HWND CrEdit(HWND hwnd, LPCSTR text, UINT px, UINT py, UINT sx, UINT sy, UINT_PTR
 	return edit;
 }
 
-HWND CrButton(HWND hwnd, LPCSTR text, UINT px, UINT py, UINT sx, UINT sy, UINT_PTR ID)
+HWND CrButton(HWND hwnd, LPCWSTR text, UINT px, UINT py, UINT sx, UINT sy, UINT_PTR ID)
 {
 	HWND button = CreateWindow(
-		"Button", text,
+		L"Button", text,
 		WS_VISIBLE | WS_CHILD | BS_FLAT,
 		px, py, sx, sy,
 		hwnd, (HMENU)ID, NULL, NULL);
@@ -48,10 +55,10 @@ HWND CrButton(HWND hwnd, LPCSTR text, UINT px, UINT py, UINT sx, UINT sy, UINT_P
 	return button;
 }
 
-HWND CrStatic(HWND hwnd, LPCSTR text, UINT px, UINT py, UINT sx, UINT sy)
+HWND CrStatic(HWND hwnd, LPCWSTR text, UINT px, UINT py, UINT sx, UINT sy)
 {
 	HWND tstatic = CreateWindow(
-		"Static", text,
+		L"Static", text,
 		WS_CHILD | WS_VISIBLE | SS_LEFT,
 		px, py, sx, sy,
 		hwnd, (HMENU)NULL, NULL, NULL);
@@ -59,10 +66,10 @@ HWND CrStatic(HWND hwnd, LPCSTR text, UINT px, UINT py, UINT sx, UINT sy)
 	return tstatic;
 }
 
-HWND CrBitmap(HWND hwnd, LPCSTR path, UINT px, UINT py, UINT sx, UINT sy)
+HWND CrBitmap(HWND hwnd, LPCWSTR path, UINT px, UINT py, UINT sx, UINT sy)
 {
 	HWND bitmap = CreateWindow(
-		"Static", NULL,
+		L"Static", NULL,
 		WS_CHILD | WS_VISIBLE | SS_BITMAP,
 		px, py, sx, sy,
 		hwnd, (HMENU)NULL, NULL, NULL);
@@ -76,7 +83,7 @@ HWND CrBitmap(HWND hwnd, LPCSTR path, UINT px, UINT py, UINT sx, UINT sy)
 HWND CrLine(HWND hwnd, UINT px, UINT py, UINT sx, UINT sy)
 {
 	HWND tstatic = CreateWindow(
-		"Static", "",
+		L"Static", L"",
 		WS_CHILD | WS_VISIBLE | SS_ETCHEDHORZ,
 		px, py, sx, sy,
 		hwnd, (HMENU)NULL, NULL, NULL);
@@ -84,10 +91,10 @@ HWND CrLine(HWND hwnd, UINT px, UINT py, UINT sx, UINT sy)
 	return tstatic;
 }
 
-HWND CrCheck(HWND hwnd, LPCSTR text, UINT px, UINT py, UINT sx, UINT sy, UINT_PTR ID, int checked)
+HWND CrCheck(HWND hwnd, LPCWSTR text, UINT px, UINT py, UINT sx, UINT sy, UINT_PTR ID, int checked)
 {
 	HWND checkb = CreateWindow(
-		"Button", text,
+		L"Button", text,
 		WS_VISIBLE | WS_CHILD | BS_CHECKBOX,
 		px, py, sx, sy,
 		hwnd, (HMENU)ID, NULL, NULL);
@@ -100,7 +107,7 @@ HWND CrCheck(HWND hwnd, LPCSTR text, UINT px, UINT py, UINT sx, UINT sy, UINT_PT
 	return checkb;
 }
 
-NOTIFYICONDATA CrNotifyIcon(HWND hwnd, LPCSTR text)
+NOTIFYICONDATA CrNotifyIcon(HWND hwnd, LPCWSTR text)
 {
 	NOTIFYICONDATA nid = { 0 };
 	nid.cbSize = sizeof(nid);
@@ -117,12 +124,12 @@ HMENU CrPopupMenu()
 {
 
 	HMENU popupMenu = CreatePopupMenu();
-	AppendMenu(popupMenu, MF_STRING, APPWM_TRAY_OPEN, "Open");
+	AppendMenu(popupMenu, MF_STRING, APPWM_TRAY_OPEN, L"Open");
 	AppendMenu(popupMenu, MF_SEPARATOR, 0, NULL);
-	AppendMenu(popupMenu, MF_STRING, APPWM_TRAY_START, "Start");
-	AppendMenu(popupMenu, MF_STRING, APPWM_TRAY_STOP, "Stop");
+	AppendMenu(popupMenu, MF_STRING, APPWM_TRAY_START, L"Start");
+	AppendMenu(popupMenu, MF_STRING, APPWM_TRAY_STOP, L"Stop");
 	AppendMenu(popupMenu, MF_SEPARATOR, 0, NULL);
-	AppendMenu(popupMenu, MF_STRING, APPWM_TRAY_EXIT, "Exit");
+	AppendMenu(popupMenu, MF_STRING, APPWM_TRAY_EXIT, L"Exit");
 
 	return popupMenu;
 }
@@ -139,16 +146,16 @@ void drawControls(HWND hwnd, int onStartup)
 
 	HWND line1 = CrLine(hwnd, 60, 150, 500, 20);
 
-	HWND static1 = CrStatic(hwnd, "Path to video player:", 60, 170, 500, 20);
+	HWND static1 = CrStatic(hwnd, L"Path to video player:", 60, 170, 500, 20);
 	HWND edit1 = CrEdit(hwnd, playerPath, 60, 190, 500, 20, APPWM_EDIT1);
 
-	HWND static2 = CrStatic(hwnd, "Parameters for video player:", 60, 230, 500, 20);
+	HWND static2 = CrStatic(hwnd, L"Parameters for video player:", 60, 230, 500, 20);
 	HWND edit2 = CrEdit(hwnd, playerParams, 60, 250, 500, 20, APPWM_EDIT2);
 
-	HWND button1 = CrButton(hwnd, "Start", 60, 310, 200, 40, APPWM_BUTTON1);
-	HWND button2 = CrButton(hwnd, "Stop", 360, 310, 200, 40, APPWM_BUTTON2);
+	HWND button1 = CrButton(hwnd, L"Start", 60, 310, 200, 40, APPWM_BUTTON1);
+	HWND button2 = CrButton(hwnd, L"Stop", 360, 310, 200, 40, APPWM_BUTTON2);
 
-	HWND check1 = CrCheck(hwnd, "Launch at startup", 60, 370, 220, 20, APPWM_CHECK1, onStartup);
+	HWND check1 = CrCheck(hwnd, L"Launch at startup", 60, 370, 220, 20, APPWM_CHECK1, onStartup);
 
 	HWND line2 = CrLine(hwnd, 60, 410, 500, 20);
 

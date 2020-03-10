@@ -4,12 +4,12 @@
 void start();
 void stop();
 void checkState();
-HANDLE run(LPCSTR, LPCSTR, int);
+HANDLE run(LPCWSTR, LPCWSTR, int);
 void setStartup();
 
 HANDLE pHandle;
-LPCSTR playerPath;
-LPCSTR playerParams;
+LPCWSTR playerPath;
+LPCWSTR playerParams;
 
 int VP_RUNNING;
 int VP_INTERRUPTED;

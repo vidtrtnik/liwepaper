@@ -1,3 +1,9 @@
+#ifndef UNICODE
+#define UNICODE
+#endif
+#ifndef _UNICODE
+#define _UNICODE
+#endif
 #define WP_IMPLEMENTATION
 
 #include "weebp/weebp.c"
@@ -5,8 +11,8 @@
 #include "winapi_help.h"
 
 HANDLE procHandle = NULL;
-LPCSTR playerPath = "mpv.exe";
-LPCSTR playerParams = "--vo=gpu --gpu-context=d3d11 --hwdec=d3d11va --terminal=no --no-input-default-bindings --loop=inf --audio=no --fs \"video.mp4\"";
+LPCWSTR playerPath = L"mpv.exe";
+LPCWSTR playerParams = L"--vo=gpu --gpu-context=d3d11 --hwdec=d3d11va --terminal=no --no-input-default-bindings --loop=inf --audio=no --fs \"video.mp4\"";
 
 int VP_RUNNING = 0;
 int VP_INTERRUPTED = 0;
@@ -63,7 +69,7 @@ void checkState()
 }
 
 
-HANDLE run(LPCSTR file, LPCSTR parameters, int wait)
+HANDLE run(LPCWSTR file, LPCWSTR parameters, int wait)
 {
 	HANDLE pHandle = shellExec(file, parameters);
 	Sleep(wait);
@@ -79,7 +85,7 @@ void setStartup()
 	TCHAR szDir[MAX_PATH];
 	GetCurrentDirectory(MAX_PATH, szDir);
 
-	createShortcut(szPath, "1", szDir, szPath, "Liwepaper");
+	createShortcut(szPath, L"1", szDir, szPath, L"Liwepaper");
 }
 
 void unsetStartup()
@@ -87,5 +93,5 @@ void unsetStartup()
 	TCHAR szDir[MAX_PATH];
 	GetCurrentDirectory(MAX_PATH, szDir);
 
-	deleteShortcut("Liwepaper.lnk", szDir);
+	deleteShortcut(L"Liwepaper.lnk", szDir);
 }

@@ -56,11 +56,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine,
 	// Create the popup menu
 	hMenu = CrPopupMenu();
 
+	// Create the font
+	//HFONT hFont = CreateFont(16, 0, 0, 0, FW_SEMIBOLD, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_TT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH, L"Segoe UI");
+
 	// Create and start timer
 	UINT_PTR timer = setTimer(hwnd, APPWM_TIMER, 1500);
 
 	// Draw window controls
-	drawControls(hwnd, onStartup);
+	//drawControls(hwnd, hFont, onStartup);
+	drawControls(hwnd, NULL, onStartup);
 
 	if (onStartup)
 		start();

@@ -140,7 +140,7 @@ void changeStaticColor(HDC hdcStatic)
 	SetTextColor(hdcStatic, RGB(255, 255, 255));
 }
 
-void drawControls(HWND hwnd, int onStartup)
+void drawControls(HWND hwnd, HFONT hFont, int onStartup)
 {
 	HWND logo = CrBitmap(hwnd, NULL, 100, 15, 420, 130);
 
@@ -161,6 +161,14 @@ void drawControls(HWND hwnd, int onStartup)
 
 	EnableWindow(edit1, 0);
 	EnableWindow(edit2, 0);
+
+	/*
+	SendMessage(static1, WM_SETFONT, (WPARAM) hFont, TRUE);
+	SendMessage(static2, WM_SETFONT, (WPARAM) hFont, TRUE);
+	SendMessage(button1, WM_SETFONT, (WPARAM) hFont, TRUE);
+	SendMessage(button2, WM_SETFONT, (WPARAM) hFont, TRUE);
+	SendMessage(check1, WM_SETFONT, (WPARAM) hFont, TRUE);
+	*/
 }
 
 void handlePaint(HWND hwnd)

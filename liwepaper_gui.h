@@ -28,7 +28,7 @@ HWND CrCheck(HWND, LPCWSTR, UINT, UINT, UINT, UINT, UINT_PTR, int);
 NOTIFYICONDATA CrNotifyIcon(HWND, LPCWSTR);
 HMENU CrPopupMenu();
 void changeStaticColor(HDC);
-void drawControls(HWND, int);
+void drawControls(HWND, HFONT, int);
 void handlePaint(HWND);
 int handleCheckBox(HWND);
 void OpenContextMenu(HWND, HMENU);

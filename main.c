@@ -53,18 +53,20 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine,
 	// Show the notification icon
 	Shell_NotifyIcon(NIM_ADD, &nid);
 
-	// Create the popup menu
-	hMenu = CrPopupMenu();
-
 	// Create the font
-	//HFONT hFont = CreateFont(16, 0, 0, 0, FW_SEMIBOLD, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_TT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH, L"Segoe UI");
+	HFONT hFont = CreateFont(18, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_TT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH, L"Corbel");
+	//HFONT hFontDef = GetStockObject(DEFAULT_GUI_FONT);
 
 	// Create and start timer
 	UINT_PTR timer = setTimer(hwnd, APPWM_TIMER, 1500);
 
 	// Draw window controls
-	//drawControls(hwnd, hFont, onStartup);
-	drawControls(hwnd, NULL, onStartup);
+	drawControls(hwnd, hFont, onStartup);
+	//drawControls(hwnd, hFontDef, onStartup);
+	//drawControls(hwnd, NULL, onStartup);
+
+	// Create the popup menu
+	hMenu = CrPopupMenu();
 
 	if (onStartup)
 		start();

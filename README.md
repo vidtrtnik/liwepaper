@@ -24,6 +24,5 @@ Download or compile [mpv](https://mpv.io/) (a free, open source, and cross-platf
 - Implement keyboard shortcuts.
 
 
-<i>Current version: 1.0</i>
-
+<i>Current version: 1.0</i>  
 <b>Author: Vid Trtnik<b>
